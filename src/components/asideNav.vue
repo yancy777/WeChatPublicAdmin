@@ -167,3 +167,69 @@
 		height:35px;
 	}
 </style>
+
+<!--<template>
+	<div>
+		<el-row class="aside-nav">-->
+			<!--左侧导航-->
+			<!--<div :class="{showSidebar:!collapsed}">-->
+				<!--展开折叠开关-->
+				<!--<div class="menu-toggle" @click.prevent="collapse">
+					<i class="el-icon-d-arrow-right" v-show="collapsed"></i>
+					<span v-show="!collapsed">&nbsp;</span><i class="el-icon-d-arrow-left nav-icon" v-show="!collapsed"></i>
+				</div>-->
+				<!--导航菜单-->
+				<!--<el-menu default-active="/main/home" router :collapse="collapsed" style="background: #fff ;">-->
+					<!--<el-menu-item index="/main/home">
+						<i class="el-icon-menu"></i>
+						<span slot="title">&nbsp; 总 览 </span>
+					</el-menu-item>
+				</el-menu>
+			</div>
+		</el-row>
+	</div>
+</template>-->
+<!--<script>
+	import Vue from 'Vue'
+	import content from '../utils/context'
+	import router from '../router'
+	export default {
+		data() {
+			return {
+				isCollapse: true,
+				collapsed: true
+
+			}
+		},
+		methods: {
+			collapse: function() {
+				this.collapsed = !this.collapsed;
+			}
+		}
+	}
+</script>
+
+<style scoped>
+
+	.menu-toggle {
+		line-height: 50px;
+		background: #eeeeee;
+	}
+	
+	.menu-toggle .nav-icon {
+		min-width: 150px;
+	}
+	
+	.content-container {
+		background: #fff;
+		flex: 1;
+		overflow-y: auto;
+		padding: 10px;
+		padding-bottom: 1px;
+	}
+	
+	.content-wrapper {
+		background-color: #fff;
+		box-sizing: border-box;
+	}
+</style>-->
