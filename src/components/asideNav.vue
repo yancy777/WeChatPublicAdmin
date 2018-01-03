@@ -7,7 +7,7 @@
 -->
 <template>
 	<div>
-		<div v-if = 'whatNavigation'>
+		<div v-if ='whatNavigation==0'>
 			<transition name="slide-fade-in">
 				<div class="aside-nav" v-if="showIn" @click="openNavigation()">
 					<div class="aside-nav-title" @click="showIn = !showIn"><img src="/static/images/navigation-open.png" alt="headTop.vue" /></div>
@@ -25,7 +25,7 @@
 				</el-menu>
 			</div>
 		</div>
-		<div v-else>
+		<div v-if ='whatNavigation==1'>
 			<transition name="slide-fade-in">
 				<div class="aside-nav" v-if="showIn" @click="openNavigation()">
 					<div class="aside-nav-title" @click="showIn = !showIn"><img src="/static/images/navigation-open.png" alt="headTop.vue" /></div>
@@ -66,6 +66,28 @@
 				</el-menu>
 			</div>
 		</div>
+		<div v-if ='whatNavigation==2'>
+			<transition name="slide-fade-in">
+				<div class="aside-nav" v-if="showIn" @click="openNavigation()">
+					<div class="aside-nav-title" @click="showIn = !showIn"><img src="/static/images/navigation-open.png" alt="headTop.vue" /></div>
+				</div>
+			</transition>
+			<div class="aside-nav-in" @click="closeNavigation()" v-if="isTrue">
+				<div class="aside-nav-title" @click="showIn = !showIn"><img src="/static/images/navigation-close.png" alt="" /></div>
+			</div>
+			<div>
+				<el-menu default-active="TeachingPlan" class="el-menu-vertical-demo" :collapse="isCollapse" background-color="#ffffff" :router=true>
+				 	<el-menu-item index="TeachingPlan">
+				 	  <i class="el-icon-menu"></i>
+				 	  <span slot="title">课程列表</span>
+				 	</el-menu-item>
+				 		<el-menu-item index="TeachingTemplate">
+				 	  <i class="el-icon-tickets"></i>
+				 	  <span slot="title">教案模板</span>
+				 	</el-menu-item>
+				</el-menu>
+			</div>
+		</div>
 	</div>
 </template>
 <script>
@@ -79,7 +101,7 @@
 				isCollapse: true,
 				collapsed: true,
 				showIn:false,
-				whatNavigation:true,
+				whatNavigation:1,
 				isTrue:true
 			}
 		},
@@ -105,9 +127,11 @@
 			pub.$on('index',function(index){//监听first组件的txt事件
 				console.log('接收到的index是'+index);
 				if(index === 0){
-					_this.whatNavigation = true;
+					_this.whatNavigation = 0;
 				}else if(index === 1){
-					_this.whatNavigation = false;
+					_this.whatNavigation = 1;
+				}else if(index === 2){
+					_this.whatNavigation = 2;
 				}
 			});
 		}
@@ -167,69 +191,3 @@
 		height:35px;
 	}
 </style>
-
-<!--<template>
-	<div>
-		<el-row class="aside-nav">-->
-			<!--左侧导航-->
-			<!--<div :class="{showSidebar:!collapsed}">-->
-				<!--展开折叠开关-->
-				<!--<div class="menu-toggle" @click.prevent="collapse">
-					<i class="el-icon-d-arrow-right" v-show="collapsed"></i>
-					<span v-show="!collapsed">&nbsp;</span><i class="el-icon-d-arrow-left nav-icon" v-show="!collapsed"></i>
-				</div>-->
-				<!--导航菜单-->
-				<!--<el-menu default-active="/main/home" router :collapse="collapsed" style="background: #fff ;">-->
-					<!--<el-menu-item index="/main/home">
-						<i class="el-icon-menu"></i>
-						<span slot="title">&nbsp; 总 览 </span>
-					</el-menu-item>
-				</el-menu>
-			</div>
-		</el-row>
-	</div>
-</template>-->
-<!--<script>
-	import Vue from 'Vue'
-	import content from '../utils/context'
-	import router from '../router'
-	export default {
-		data() {
-			return {
-				isCollapse: true,
-				collapsed: true
-
-			}
-		},
-		methods: {
-			collapse: function() {
-				this.collapsed = !this.collapsed;
-			}
-		}
-	}
-</script>
-
-<style scoped>
-
-	.menu-toggle {
-		line-height: 50px;
-		background: #eeeeee;
-	}
-	
-	.menu-toggle .nav-icon {
-		min-width: 150px;
-	}
-	
-	.content-container {
-		background: #fff;
-		flex: 1;
-		overflow-y: auto;
-		padding: 10px;
-		padding-bottom: 1px;
-	}
-	
-	.content-wrapper {
-		background-color: #fff;
-		box-sizing: border-box;
-	}
-</style>-->

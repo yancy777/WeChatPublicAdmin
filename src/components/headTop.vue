@@ -91,7 +91,8 @@
 				},
 				routes: [
 					{ path: '/main/Home_SaleData', name: '体侧销售分析', },
-					{ path: '/main/Home_WeChat', name: '公众号', }			
+					{ path: '/main/Home_WeChat', name: '公众号', },
+					{ path: '/main/TeachingPlan', name: '课程教程', }		
 				]
 				
 			}
@@ -111,8 +112,10 @@
 				var hash = window.location.hash;				
 				if(hash == '#/main/Home_SaleData'){
 					this.index = 0;
-				}else{
+				}else if(hash == '#/main/Home_WeChat'){
 					this.index = 1;
+				}else{
+					this.index = 2;
 				}
 				var menu = document.getElementsByClassName('headTopMenu');
 				var _this = this;

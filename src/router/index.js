@@ -22,7 +22,7 @@ export default new Router({
             component: require('../pages/WeChatTemplateInfo'),
         },{
             path: 'TempalteHistory_WeChat',
-            component: require('../pages/WeChatTempalteHistory.vue'),
+            component: require('../pages/WeChatTempalteHistory'),
         },{
             path: 'AutoReply_WeChat',
             component: require('../pages/WeChatAutoReply'),
@@ -31,7 +31,16 @@ export default new Router({
             component: require('../pages/WeChatQRcode'),
         },{
             path: 'CustomMenu_WeChat',
-            component: require('../pages/WeChatCustomMenu.vue'),
+            component: require('../pages/WeChatCustomMenu'),
+        },{
+            path: 'CustomMenu_WeChat',
+            component: require('../pages/WeChatCustomMenu'),
+        },{
+            path: 'TeachingPlan',
+            component: require('../pages/TeachingPlan'),
+        },{
+            path: 'TeachingTemplate',
+            component: require('../pages/TeachingTemplate'),
         }]
     }]
 

@@ -128,12 +128,12 @@
 			},
 		},
 		methods: {
-			formatRepstr: function(str) {
-				if(str) {
-					let exampleHtml = str.split(/\r\n/ig)
-					return exampleHtml
-				}
-			},
+//			formatRepstr: function(str) {
+//				if(str) {
+//					let exampleHtml = str.split(/\r\n/ig)
+//					return exampleHtml
+//				}
+//			},
 
 			checkCountUser: function() {
 				if(this.sendCount > this.countUser) {

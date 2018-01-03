@@ -274,7 +274,7 @@
 			getHicharts: function() {
 				var chart = Highcharts.chart('container', {
 					chart: {
-						height: 340,
+						height: 320,
 						type: 'line'
 					},
 					credits: {
