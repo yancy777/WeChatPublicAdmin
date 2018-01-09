@@ -31,9 +31,14 @@
 												<el-radio-button label="小班" value="2"></el-radio-button>
 											</el-radio-group>
 										</el-form-item>
-										<el-form-item label="动作分类">
-											<el-cascader :options="options" v-model="selectedOptions" @change="handleChange">
+										<el-form-item label="动作标签">
+											<!-- <el-cascader v-for="type in templateInput.MotorType" class="motor-label" :options="options" v-model="selectedOptions" @change="handleChange">
+											</el-cascader> -->
+											<el-cascader v-for="type in templateInput.MotorType" class="motor-label" :options="options" :value="typeFormat(type)" @change="handleChange">
 											</el-cascader>
+											<br>
+											<el-button type="primary" plain v-on:click="addLabel()">增加</el-button>
+											<el-button type="danger" plain v-on:click="deleteLabel()">删除</el-button>
 										</el-form-item>
 										<el-form-item label="教学目标">
 											<el-input v-model="templateInput.Purpose" type="textarea" :rows="6" placeholder="请输入内容" class="textarea-box" @change="supRes1(templateInput.Purpose)">
@@ -192,7 +197,7 @@
 					BaseContent: "",
 					EndContent: "",
 					Grade: "大班",
-					MotorType: "",
+					MotorType: [""],
 					SaceImg: "",
 					ShapeImg: "",
 					PrepareImg: "",
@@ -201,10 +206,9 @@
 					shapeImgs: "",
 					prepareImgs: "",
 					endImgs: "",
-
 				},
 				options: config.actionDevelopment,
-				selectedOptions: [],
+				selectedOptions: ['110000','110100','110101'],
 				value: '',
 				exampleHtml1: "",
 				exampleHtml2: "",
@@ -213,7 +217,7 @@
 				exampleHtml5: "",
 				exampleHtml6: "",
 				exampleHtml7: "",
-				btnUpdate: ""
+				btnUpdate: "",
 			};
 		},
 		filters: {
@@ -222,13 +226,13 @@
 		},
 		methods: {
 			handleChange(label) {
-				if(label.length < 3) {
-					debugger;
-					this.templateInput.MotorType = label[1];
-				} else {
-					this.templateInput.MotorType = label[2];
+				debugger;
+				for(var index in this.templateInput.MotorType){
+					var type = this.templateInput.MotorType[index];
+					if(type == ""){
+						this.templateInput.MotorType[index] =  "" + label[label.length - 1];
+					}
 				}
-
 			},
 			supRes1: function(val) {
 				let result = util.formatRepstr(val);
@@ -302,23 +306,16 @@
 			editTemplate: function() {
 				this.templateInput = JSON.parse(localStorage.getItem("editTemplateDate"));
 				this.templateInput.Grade = config.classType2[this.templateInput.Grade];
+				this.templateInput.MotorType = eval(this.templateInput.MotorType);
 
-				let motor = this.templateInput.MotorType;
-				let mun1 = motor.substring(0, 2);
-				let mun2 = motor.substring(0, 4);
-				let mun3 = motor.substring(5, 6);
-				if(mun3 === "00") {
-					this.selectedOptions = [mun1 + "0000", motor];
-				} else {
-					this.selectedOptions = [mun1 + "0000", mun2 + "00", motor];
-				}
+				
 				//				this.selectedOptions=[mun1+"0000",mun2+"00",motor];
 				console.log(this.selectedOptions);
 				debugger;
-				this.templateInput.prepareImgs = 'http://ruilai-course.oss-cn-qingdao.aliyuncs.com/' + this.templateInput.PrepareImg;
-				this.templateInput.shapeImgs = 'http://ruilai-course.oss-cn-qingdao.aliyuncs.com/' + this.templateInput.ShapeImg;
-				this.templateInput.spaceImgs = 'http://ruilai-course.oss-cn-qingdao.aliyuncs.com/' + this.templateInput.SpaceImg;
-				this.templateInput.endImgs = 'http://ruilai-course.oss-cn-qingdao.aliyuncs.com/' + this.templateInput.EndImg;
+				this.templateInput.prepareImgs =this.aliImg(this.templateInput.PrepareImg);
+				this.templateInput.shapeImgs = this.aliImg(this.templateInput.ShapeImg);
+				this.templateInput.spaceImgs = this.aliImg(this.templateInput.SpaceImg);
+				this.templateInput.endImgs = this.aliImg(this.templateInput.EndImg);
 
 				let result1 = util.formatRepstr(this.templateInput.Purpose);
 				let result2 = util.formatRepstr(this.templateInput.Equipment);
@@ -334,6 +331,13 @@
 				this.exampleHtml5 = result5.replace(/\n|\r\n/g, '<br/>').replace(" ", "&nbsp;");
 				this.exampleHtml6 = result6.replace(/\n|\r\n/g, '<br/>').replace(" ", "&nbsp;");
 				this.exampleHtml7 = result7.replace(/\n|\r\n/g, '<br/>').replace(" ", "&nbsp;");
+			},
+			aliImg:function(imgName){
+				var imgUrl = "";
+				if(imgName != "" && imgName != null){
+					imgUrl = "http://ruilai-course.oss-cn-qingdao.aliyuncs.com/"+imgName;
+				}
+				return imgUrl;
 			},
 			updataTemplate: function(type) {
 
@@ -435,8 +439,30 @@
 			saveAddReturn: function() {
 				this.addTemplate("back");
 
+			},
+			addLabel: function(){
+				this.templateInput.MotorType.push("");
+			},
+			deleteLabel: function(){
+				if(this.templateInput.MotorType.length > 1){
+					this.templateInput.MotorType.pop();
+				}
+			},
+			typeFormat: function(type){
+				var selectedOption;
+				let motor = "" + type;
+				let mun1 = motor.substring(0, 2);
+				let mun2 = motor.substring(0, 4);
+				let mun3 = motor.substring(5, 6);
+				if(mun3 === "00") {
+					selectedOption = [mun1 + "0000", motor];
+				} else {
+					selectedOption = [mun1 + "0000", mun2 + "00", motor];
+				}
+				return selectedOption;
 			}
 		},
+
 		mounted() {
 			let query = this.$route.query;
 			this.btnUpdate = true;
@@ -497,7 +523,7 @@
 	
 	.content-box-info {
 		width: 95%;
-		height: 520px;
+		height: auto;
 		background: #ffffff;
 		margin-top: 50px;
 	}
@@ -527,5 +553,9 @@
 		margin-right: 30px;
 		word-wrap: break-word;
 		word-break: normal;
+	}
+
+	.motor-label{
+		width: 300px;
 	}
 </style>

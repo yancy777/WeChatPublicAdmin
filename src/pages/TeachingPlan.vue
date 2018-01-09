@@ -34,7 +34,7 @@
 											<template slot="CreateTime" scope="row">{{row.item | formatBirthday}}</template>
 											<template slot="EditTime" scope="row">{{row.item | formatBirthday}}</template>
 											<template slot="Grade" scope="row">{{row.item | formatGender}}</template>formatMotorType
-											<!--<template slot="MotorType" scope="row">{{row.item | formatMotorType}}</template>-->
+											<template slot="MotorType" scope="row">{{row.item | formatMotorType}}</template>
 											<template slot="operation" scope="row">
 												<el-button type="success" size="small" class="btn-css-green" @click="handleEdit(row.item)">编 辑</el-button>
 												<el-button type="primary" size="small" class="btn-css-green" @click="handleDel(row.item)">删 除</el-button>
@@ -55,7 +55,7 @@
 	import Vue from 'Vue';
 	import utils from "../assets/js/commons";
 	import router from "../router";
-	
+//	import config from "../assets/js/config";
 	export default {
 		data() {
 			return {
@@ -64,7 +64,7 @@
 				fields: {
 					Name: { label: '课程名', sortable: false},
 					Grade: { label: '年级', sortable: true},
-//					MotorType: { label: '教学内容' ,sortable: true},
+					MotorType: { label: '教学内容' ,sortable: true},
 					CreateTime: { label: '创建时间', sortable: true},
 					EditTime: { label: '修改时间', },
 					operation: { label: '操作' }
